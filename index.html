@@ -106,6 +106,9 @@
                     <button id="rotate-left-btn" class="p-2 bg-gray-300 rounded-full hover:bg-gray-400 transition-colors">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </button>
+                    <button id="engine-sound-btn" class="p-2 bg-gray-300 rounded-full hover:bg-gray-400 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-engine"><path d="M5 15H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h1"></path><path d="M12 5h8v10h-8"></path><path d="M8 15h4l-2-4"></path><path d="M8 9h4"></path><path d="M18 15h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2h-1"></path><path d="M12 5V3"></path><path d="M12 15v2"></path><path d="M5 7H4"></path><path d="M5 13H4"></path><path d="M18 7h1"></path><path d="M18 13h1"></path></svg>
+                    </button>
                     <button id="rotate-right-btn" class="p-2 bg-gray-300 rounded-full hover:bg-gray-400 transition-colors">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </button>
@@ -216,6 +219,14 @@
                 rotate('right');
             });
 
+            // Engine sound controls
+            const engineSoundBtn = document.getElementById('engine-sound-btn');
+            const engineSound = document.getElementById('engine-sound');
+
+            engineSoundBtn.addEventListener('click', function() {
+                engineSound.play();
+            });
+
             // Initialize maintenance chart
             const chartDom = document.getElementById('maintenance-chart');
             const myChart = echarts.init(chartDom);
@@ -275,5 +286,6 @@
             });
         });
     </script>
+    <audio id="engine-sound" src="landcruiser_engine.wav"></audio>
 </body>
 </html>
