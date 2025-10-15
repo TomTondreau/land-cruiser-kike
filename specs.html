@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Especificaciones - Land Cruiser 84</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f3f0 0%, #e8e3dc 100%);
+            min-height: 100vh;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        .card-shadow {
+            box-shadow: 0 20px 40px rgba(45, 58, 43, 0.1);
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: #4a5d45;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4a5d45;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .spec-card {
+            transition: all 0.3s ease;
+        }
+        .spec-card:hover {
+            transform: translateY(-5px);
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #4a5d45;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-sm fixed w-full top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-green-700 to-green-900 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">GX</span>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">Land Cruiser 84</h1>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Inicio</a>
+                    <a href="checklist.html" class="nav-link text-gray-700 font-medium">Checklist</a>
+                    <a href="gallery.html" class="nav-link text-gray-700 font-medium">Galería</a>
+                    <a href="specs.html" class="nav-link text-green-700 font-medium">Especificaciones</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="pt-24 pb-8 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="hero-title text-5xl md:text-6xl mb-4 text-gray-800">Especificaciones Técnicas</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Datos detallados del Toyota Land Cruiser GX Serie 60 de 1984 - La evolución del off-road</p>
+        </div>
+    </section>
+
+    <!-- Tab Navigation -->
+    <section class="px-6 mb-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white rounded-2xl p-4 card-shadow">
+                <div class="flex flex-wrap justify-center space-x-4">
+                    <button class="tab-button active px-6 py-3 rounded-xl font-medium" onclick="showTab('engine')">
+                        Motor & Performance
+                    </button>
+                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab('dimensions')">
+                        Dimensiones & Peso
+                    </button>
+                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab('transmission')">
+                        Transmisión & Tracción
+                    </button>
+                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab('suspension')">
+                        Suspensión & Frenos
+                    </button>
+                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab('electrical')">
+                        Sistema Eléctrico
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tab Content -->
+    <section class="px-6 pb-16">
+        <div class="max-w-7xl mx-auto">
+            
+            <!-- Engine & Performance Tab -->
+            <div id="engine" class="tab-content active">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Motor 2H - 4.0L Diesel</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Tipo</span>
+                                <span class="text-gray-800">6 cilindros en línea Diesel</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Cilindrada</span>
+                                <span class="text-gray-800">3980 cc</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Potencia Máxima</span>
+                                <span class="text-gray-800">105 HP @ 3500 rpm</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Torque Máximo</span>
+                                <span class="text-gray-800">177 lb-ft @ 2000 rpm</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Sistema de Combustible</span>
+                                <span class="text-gray-800">Inyección directa</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Compresión</span>
+                                <span class="text-gray-800">21.0:1</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="font-medium text-gray-600">Alimentación</span>
+                                <span class="text-gray-800">Diesel</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Performance GX</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Velocidad Máxima</span>
+                                <span class="text-gray-800">125 km/h</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Aceleración 0-100 km/h</span>
+                                <span class="text-gray-800">28 segundos</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Consumo Urbano</span>
+                                <span class="text-gray-800">14-16 L/100km</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Consumo Carretera</span>
+                                <span class="text-gray-800">11-13 L/100km</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Capacidad Tanque</span>
+                                <span class="text-gray-800">70 litros</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Autonomía Aproximada</span>
+                                <span class="text-gray-800">450-600 km</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="font-medium text-gray-600">Emisiones CO2</span>
+                                <span class="text-gray-800">No aplica (modelo antiguo)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow lg:col-span-2">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Curva de Torque y Potencia Motor 2H</h3>
+                        <div id="performance-chart" style="height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dimensions & Weight Tab -->
+            <div id="dimensions" class="tab-content">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Dimensiones Exteriores Serie 60</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Longitud Total</span>
+                                <span class="text-gray-800">4670 mm</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Ancho Total</span>
+                                <span class="text-gray-800">1800 mm</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Altura Total</span>
+                                <span class="text-gray-800">1890 mm</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Distancia Entre Ejes</span>
+                                <span class="text-gray-800">2730 mm</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Vía Delantera</span>
+                                <span class="text-gray-800">1450 mm</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Vía Trasera</span>
+                                <span class="text-gray-800">1420 mm</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="font-medium text-gray-600">Altura al Suelo</span>
+                                <span class="text-gray-800">235 mm</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Pesos y Capacidades GX</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Peso en Vacío</span>
+                                <span class="text-gray-800">2100 kg</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Capacidad de Carga</span>
+                                <span class="text-gray-800">750 kg</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Capacidad de Remolque</span>
+                                <span class="text-gray-800">3500 kg</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Capacidad de Pasajeros</span>
+                                <span class="text-gray-800">7-8 personas</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Capacidad de Combustible</span>
+                                <span class="text-gray-800">70 litros</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Capacidad de Aceite</span>
+                                <span class="text-gray-800">9.5 litros</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="font-medium text-gray-600">Capacidad de Refrigerante</span>
+                                <span class="text-gray-800">14 litros</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow lg:col-span-2">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Ángulos de Aproximación Serie 60</h3>
+                        <div id="angles-chart" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transmission & Traction Tab -->
+            <div id="transmission" class="tab-content">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Transmisión H41</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Tipo de Caja</span>
+                                <span class="text-gray-800">Manual H41</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Número de Velocidades</span>
+                                <span class="text-gray-800">4 + Reversa</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Relación 1era</span>
+                                <span class="text-gray-800">4.374:1</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Relación 2da</span>
+                                <span class="text-gray-800">2.381:1</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Relación 3ra</span>
+                                <span class="text-gray-800">1.429:1</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Relación 4ta</span>
+                                <span class="text-gray-800">1.000:1</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="font-medium text-gray-600">Relación Reversa</span>
+                                <span class="text-gray-800">4.472:1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Sistema de Tracción Serie 60</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Tipo de Tracción</span>
+                                <span class="text-gray-800">4x4 Selectable</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Transfer Case</span>
+                                <span class="text-gray-800">2 velocidades</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Relación Reductora</span>
+                                <span class="text-gray-800">2.313:1</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Diferencial Delantero</span>
+                                <span class="text-gray-800">Tipo abierto</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Diferencial Trasero</span>
+                                <span class="text-gray-800">Tipo abierto</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Bloqueo de Diferencial</span>
+                                <span class="text-gray-800">Opcional</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="font-medium text-gray-600">Ejes</span>
+                                <span class="text-gray-800">Ejes sólidos Serie 60</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow lg:col-span-2">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Relaciones de Transmisión H41</h3>
+                        <div id="transmission-chart" style="height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suspension & Brakes Tab -->
+            <div id="suspension" class="tab-content">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Suspensión Serie 60</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Tipo Delantera</span>
+                                <span class="text-gray-800">Ballestas semi-elípticas</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Tipo Trasera</span>
+                                <span class="text-gray-800">Ballestas semi-elípticas</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Amortiguadores Delanteros</span>
+                                <span class="text-gray-800">Hidráulicos telescópicos</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Amortiguadores Traseros</span>
+                                <span class="text-gray-800">Hidráulicos telescópicos</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Recorrido de Suspensión</span>
+                                <span class="text-gray-800">200 mm</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Barra Estabilizadora</span>
+                                <span class="text-gray-800">Delantera y trasera</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="font-medium text-gray-600">Tipo de Dirección</span>
+                                <span class="text-gray-800">Mecánica de piñón y cremallera</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Sistema de Frenos Serie 60</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Tipo de Freno Principal</span>
+                                <span class="text-gray-800">Hidráulico con asistencia</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Freno de Estacionamiento</span>
+                                <span class="text-gray-800">Mecánico en traseras</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Frenos Delanteros</span>
+                                <span class="text-gray-800">Discos ventilados</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Frenos Traseros</span>
+                                <span class="text-gray-800">Tambores</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Diámetro Discos Delanteros</span>
+                                <span class="text-gray-800">300 mm</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Diámetro Tambores Traseros</span>
+                                <span class="text-gray-800">320 mm</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="font-medium text-gray-600">Sistema ABS</span>
+                                <span class="text-gray-800">No disponible</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow lg:col-span-2">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Llantas Serie 60</h3>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-green-600 mb-2">7.50</div>
+                                <div class="text-gray-600">Ancho (pulgadas)</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-green-600 mb-2">16</div>
+                                <div class="text-gray-600">Diámetro (pulgadas)</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-green-600 mb-2">LT</div>
+                                <div class="text-gray-600">Tipo</div>
+                            </div>
+                        </div>
+                        <div class="mt-6 text-center text-gray-600">
+                            <p>Neumáticos todo terreno con refuerzo lateral para off-road pesado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Electrical System Tab -->
+            <div id="electrical" class="tab-content">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Sistema Eléctrico Serie 60</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Voltaje del Sistema</span>
+                                <span class="text-gray-800">12V</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Batería</span>
+                                <span class="text-gray-800">12V - 70Ah</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Alternador</span>
+                                <span class="text-gray-800">12V - 40A</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Sistema de Encendido</span>
+                                <span class="text-gray-800">Calefactores bujías</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Tipo de Bujías</span>
+                                <span class="text-gray-800">Calefactoras diesel</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Cable de Encendido</span>
+                                <span class="text-gray-800">7mm silicona</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="font-medium text-gray-600">Fusibles Principales</span>
+                                <span class="text-gray-800">30A, 40A, 60A</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Luces y Señales Serie 60</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Faros Principales</span>
+                                <span class="text-gray-800">Halógenos H4</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Luces de Trabajo</span>
+                                <span class="text-gray-800">Incandescentes</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Direccionales</span>
+                                <span class="text-gray-800">Naranja incandescente</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Luces de Freno</span>
+                                <span class="text-gray-800">Rojo incandescente</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Luces de Marcha Atrás</span>
+                                <span class="text-gray-800">Blanco incandescente</span>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200">
+                                <span class="font-medium text-gray-600">Luces de Posición</span>
+                                <span class="text-gray-800">Incandescente</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="font-medium text-gray-600">Luz de Placa</span>
+                                <span class="text-gray-800">Incandescente blanca</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spec-card bg-white rounded-3xl p-8 card-shadow lg:col-span-2">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Sistema de Carga Serie 60</h3>
+                        <div class="text-center">
+                            <div class="text-6xl font-bold text-green-600 mb-4">40A</div>
+                            <div class="text-xl text-gray-600 mb-6">Capacidad del Alternador</div>
+                            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-gray-800">12V</div>
+                                    <div class="text-gray-600">Sistema</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-gray-800">70Ah</div>
+                                    <div class="text-gray-600">Batería</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-gray-800">480W</div>
+                                    <div class="text-gray-600">Potencia Máxima</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-gray-400">© 2024 Land Cruiser 84 Restoration App. Manteniendo la leyenda viva.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Initialize charts for the active tab
+            setTimeout(() => {
+                initializeCharts(tabName);
+            }, 100);
+        }
+
+        function initializeCharts(tabName) {
+            if (tabName === 'engine') {
+                initPerformanceChart();
+            } else if (tabName === 'dimensions') {
+                initAnglesChart();
+            } else if (tabName === 'transmission') {
+                initTransmissionChart();
+            }
+        }
+
+        function initPerformanceChart() {
+            const chartDom = document.getElementById('performance-chart');
+            if (!chartDom || chartDom.hasAttribute('data-initialized')) return;
+            
+            const myChart = echarts.init(chartDom);
+            chartDom.setAttribute('data-initialized', 'true');
+            
+            const option = {
+                title: {
+                    text: 'Curvas de Performance Motor 2H',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['Potencia (HP)', 'Torque (lb-ft)'],
+                    top: '10%'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['1000', '1500', '2000', '2500', '3000', '3500', '4000'],
+                    name: 'RPM'
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: 'Potencia (HP)',
+                        position: 'left'
+                    },
+                    {
+                        type: 'value',
+                        name: 'Torque (lb-ft)',
+                        position: 'right'
+                    }
+                ],
+                series: [
+                    {
+                        name: 'Potencia (HP)',
+                        type: 'line',
+                        data: [35, 50, 70, 85, 95, 105, 100],
+                        itemStyle: { color: '#4a5d45' },
+                        smooth: true
+                    },
+                    {
+                        name: 'Torque (lb-ft)',
+                        type: 'line',
+                        yAxisIndex: 1,
+                        data: [120, 140, 177, 175, 170, 165, 160],
+                        itemStyle: { color: '#8b4513' },
+                        smooth: true
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+        }
+
+        function initAnglesChart() {
+            const chartDom = document.getElementById('angles-chart');
+            if (!chartDom || chartDom.hasAttribute('data-initialized')) return;
+            
+            const myChart = echarts.init(chartDom);
+            chartDom.setAttribute('data-initialized', 'true');
+            
+            const option = {
+                title: {
+                    text: 'Ángulos de Aproximación Serie 60',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                series: [
+                    {
+                        name: 'Ángulos',
+                        type: 'pie',
+                        radius: '70%',
+                        data: [
+                            { value: 37, name: 'Ángulo de Ataque', itemStyle: { color: '#4a5d45' } },
+                            { value: 25, name: 'Ángulo de Salida', itemStyle: { color: '#8b4513' } },
+                            { value: 22, name: 'Ángulo de Rampa', itemStyle: { color: '#696969' } }
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+        }
+
+        function initTransmissionChart() {
+            const chartDom = document.getElementById('transmission-chart');
+            if (!chartDom || chartDom.hasAttribute('data-initialized')) return;
+            
+            const myChart = echarts.init(chartDom);
+            chartDom.setAttribute('data-initialized', 'true');
+            
+            const option = {
+                title: {
+                    text: 'Relaciones de Transmisión H41',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['1era', '2da', '3ra', '4ta', 'Reversa', 'Reductora']
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Relación'
+                },
+                series: [
+                    {
+                        name: 'Relación',
+                        type: 'bar',
+                        data: [4.374, 2.381, 1.429, 1.000, 4.472, 2.313],
+                        itemStyle: {
+                            color: '#4a5d45'
+                        }
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize first tab charts
+            setTimeout(() => {
+                initPerformanceChart();
+            }, 500);
+            
+            // Animate cards on load
+            anime({
+                targets: '.spec-card',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(200),
+                duration: 800,
+                easing: 'easeOutQuad'
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - Land Cruiser 84</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f3f0 0%, #e8e3dc 100%);
+            min-height: 100vh;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        .card-shadow {
+            box-shadow: 0 20px 40px rgba(45, 58, 43, 0.1);
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: #4a5d45;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4a5d45;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .gallery-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        .color-filter {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .color-filter:hover {
+            transform: scale(1.1);
+        }
+        .color-filter.active {
+            transform: scale(1.15);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+        }
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .modal img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-sm fixed w-full top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-green-700 to-green-900 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">GX</span>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">Land Cruiser 84</h1>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Inicio</a>
+                    <a href="checklist.html" class="nav-link text-gray-700 font-medium">Checklist</a>
+                    <a href="gallery.html" class="nav-link text-green-700 font-medium">Galería</a>
+                    <a href="specs.html" class="nav-link text-gray-700 font-medium">Especificaciones</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="pt-24 pb-8 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="hero-title text-5xl md:text-6xl mb-4 text-gray-800">Galería de la Leyenda</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Explora la belleza atemporal del Toyota Land Cruiser GX Serie 60 de 1984 a través de diferentes épocas, colores y estilos de restauración</p>
+        </div>
+    </section>
+
+    <!-- Color Filters -->
+    <section class="px-6 mb-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white rounded-3xl p-8 card-shadow">
+                <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">Filtrar por Color</h2>
+                <div class="flex justify-center space-x-4 flex-wrap">
+                    <div class="color-filter active w-16 h-16 rounded-full border-4 border-white shadow-lg bg-gray-500" 
+                         data-color="all" 
+                         onclick="filterByColor('all')"></div>
+                    <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #4a5d45" 
+                         data-color="green" 
+                         onclick="filterByColor('green')"></div>
+                    <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #8b4513" 
+                         data-color="brown" 
+                         onclick="filterByColor('brown')"></div>
+                    <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #696969" 
+                         data-color="gray" 
+                         onclick="filterByColor('gray')"></div>
+                    <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #2f4f2f" 
+                         data-color="dark-green" 
+                         onclick="filterByColor('dark-green')"></div>
+                    <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #8b0000" 
+                         data-color="red" 
+                         onclick="filterByColor('red')"></div>
+                    <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #4682b4" 
+                         data-color="blue" 
+                         onclick="filterByColor('blue')"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Image Carousel -->
+    <section class="px-6 mb-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white rounded-3xl p-8 card-shadow">
+                <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">Destacados</h2>
+                <div class="splide" id="featured-carousel">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            <li class="splide__slide">
+                                <img src="https://kimi-web-img.moonshot.cn/img/flexmotor.com/0017fdf0b6c9f2b91c9614541df925c8a3156526.jpg" 
+                                     alt="GX60 Classic" 
+                                     class="w-full h-96 object-cover rounded-2xl"
+                                     onclick="openModal(this)">
+                            </li>
+                            <li class="splide__slide">
+                                <img src="https://kimi-web-img.moonshot.cn/img/flexmotor.com/41f80fb641b9343f349cb68224310f1f75cafea8.jpeg" 
+                                     alt="GX60 Off-Road" 
+                                     class="w-full h-96 object-cover rounded-2xl"
+                                     onclick="openModal(this)">
+                            </li>
+                            <li class="splide__slide">
+                                <img src="https://kimi-web-img.moonshot.cn/img/flexmotor.com/ef3db970b3689b583ac42617426b8af04e71f4e6.jpeg" 
+                                     alt="GX60 Restored" 
+                                     class="w-full h-96 object-cover rounded-2xl"
+                                     onclick="openModal(this)">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Gallery -->
+    <section class="px-6 pb-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white rounded-3xl p-8 card-shadow">
+                <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">Colección Completa</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
+                    <!-- Gallery items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-gray-400">© 2024 Land Cruiser 84 Restoration App. Manteniendo la leyenda viva.</p>
+        </div>
+    </footer>
+
+    <script>
+        const galleryImages = [
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/flexmotor.com/0017fdf0b6c9f2b91c9614541df925c8a3156526.jpg",
+                alt: "GX60 Classic Green",
+                color: "green",
+                title: "GX60 Clásico Verde"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/i.pinimg.com/443827797359d70b1d4bd3969df60406be43902f.jpg",
+                alt: "GX60 Vintage Beige",
+                color: "brown",
+                title: "GX60 Vintage Beige"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/cdn.motor1.com/0b403cd4efedfede15fa6bcc560e525a1d1ee9d7.webp",
+                alt: "GX60 Gray Classic",
+                color: "gray",
+                title: "GX60 Gris Clásico"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/flexmotor.com/41f80fb641b9343f349cb68224310f1f75cafea8.jpeg",
+                alt: "GX60 Off-Road Adventure",
+                color: "green",
+                title: "GX60 Aventura Off-Road"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/flexmotor.com/ef3db970b3689b583ac42617426b8af04e71f4e6.jpeg",
+                alt: "GX60 Custom Build",
+                color: "dark-green",
+                title: "GX60 Construcción Personalizada"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/flexmotor.com/55d95cda4672b7599aa1bfb326dba83ecba1481d.jpg",
+                alt: "GX60 Restoration Project",
+                color: "brown",
+                title: "Proyecto de Restauración GX60"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/images.squarespace-cdn.com/3d3135adf08ebb5070ed3124e70ead7e4789f23e.jpg",
+                alt: "GX60 Fully Restored",
+                color: "gray",
+                title: "GX60 Completamente Restaurado"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/images.prismic.io/af60f89195dd5502cae3f2e2b13d05e37c2392be.jpg",
+                alt: "GX60 1984 Original",
+                color: "red",
+                title: "GX60 1984 Original"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/i.redd.it/c661b5ecd7a722a3b1da96f11c760e0a997ea8fa.jpg",
+                alt: "GX60 Premium Restoration",
+                color: "blue",
+                title: "Restauración Premium GX60"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/flexmotor.com/9d83963e2f1831d70325482143d5b5ac22a5f30b.jpeg",
+                alt: "GX60 Classic Off-Road",
+                color: "green",
+                title: "GX60 Clásico Off-Road"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/manafrelv.com/f171c0d05783564d843f1da528427a21c85b4675.webp",
+                alt: "GX60 Desert Tan",
+                color: "brown",
+                title: "GX60 Tan Desierto"
+            },
+            {
+                src: "https://kimi-web-img.moonshot.cn/img/carsguide-res.cloudinary.com/6be0091380468ade24beb9486721c8c075df01b0.jpg",
+                alt: "GX60 Forest Green",
+                color: "dark-green",
+                title: "GX60 Verde Bosque"
+            }
+        ];
+
+        let currentFilter = 'all';
+
+        function populateGallery() {
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
+            
+            const filteredImages = currentFilter === 'all' ? galleryImages : galleryImages.filter(img => img.color === currentFilter);
+            
+            filteredImages.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item bg-gray-100 rounded-2xl overflow-hidden card-shadow';
+                item.innerHTML = `
+                    <img src="${image.src}" alt="${image.alt}" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">${image.title}</h3>
+                        <p class="text-sm text-gray-600 mt-1">Color: ${getColorName(image.color)}</p>
+                    </div>
+                `;
+                item.onclick = () => openModal(image.src);
+                grid.appendChild(item);
+            });
+            
+            // Animate gallery items
+            anime({
+                targets: '.gallery-item',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(100),
+                duration: 600,
+                easing: 'easeOutQuad'
+            });
+        }
+
+        function getColorName(color) {
+            const colorNames = {
+                'green': 'Verde',
+                'brown': 'Marrón',
+                'gray': 'Gris',
+                'dark-green': 'Verde Oscuro',
+                'red': 'Rojo',
+                'blue': 'Azul'
+            };
+            return colorNames[color] || color;
+        }
+
+        function filterByColor(color) {
+            currentFilter = color;
+            
+            // Update active filter
+            document.querySelectorAll('.color-filter').forEach(filter => {
+                filter.classList.remove('active');
+            });
+            document.querySelector(`[data-color="${color}"]`).classList.add('active');
+            
+            // Repopulate gallery
+            populateGallery();
+        }
+
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+            modal.style.display = 'block';
+            
+            // Animate modal
+            anime({
+                targets: '.modal-content',
+                scale: [0.8, 1],
+                opacity: [0, 1],
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            anime({
+                targets: '.modal-content',
+                scale: [1, 0.8],
+                opacity: [1, 0],
+                duration: 200,
+                easing: 'easeInQuad',
+                complete: () => {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize carousel
+            new Splide('#featured-carousel', {
+                type: 'loop',
+                autoplay: true,
+                interval: 4000,
+                pauseOnHover: true,
+                arrows: true,
+                pagination: true,
+                gap: '2rem',
+                breakpoints: {
+                    768: {
+                        gap: '1rem'
+                    }
+                }
+            }).mount();
+            
+            // Populate gallery
+            populateGallery();
+            
+            // Animate sections on load
+            anime({
+                targets: '.card-shadow',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(200),
+                duration: 800,
+                easing: 'easeOutQuad'
+            });
+            
+            // Close modal on escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeModal();
+                }
+            });
+            
+            // Close modal on background click
+            document.getElementById('imageModal').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist de Mantenimiento - Land Cruiser 84</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f3f0 0%, #e8e3dc 100%);
+            min-height: 100vh;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        .card-shadow {
+            box-shadow: 0 20px 40px rgba(45, 58, 43, 0.1);
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: #4a5d45;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4a5d45;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .checklist-item {
+            transition: all 0.3s ease;
+        }
+        .checklist-item:hover {
+            background-color: #f9fafb;
+        }
+        .checkbox-custom {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #4a5d45;
+            border-radius: 6px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .checkbox-custom:checked {
+            background-color: #4a5d45;
+            border-color: #4a5d45;
+        }
+        .checkbox-custom:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        .category-card {
+            transition: all 0.3s ease;
+        }
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-sm fixed w-full top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-green-700 to-green-900 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">GX</span>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">Land Cruiser 84</h1>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Inicio</a>
+                    <a href="checklist.html" class="nav-link text-green-700 font-medium">Checklist</a>
+                    <a href="gallery.html" class="nav-link text-gray-700 font-medium">Galería</a>
+                    <a href="specs.html" class="nav-link text-gray-700 font-medium">Especificaciones</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="pt-24 pb-8 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="hero-title text-5xl md:text-6xl mb-4 text-gray-800">Checklist de Mantenimiento</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Sistema completo de verificación para mantener tu Land Cruiser GX Serie 60 en condiciones óptimas</p>
+        </div>
+    </section>
+
+    <!-- Progress Overview -->
+    <section class="px-6 mb-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white rounded-3xl p-8 card-shadow">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Progreso General</h2>
+                    <div class="text-3xl font-bold text-green-600" id="overall-progress">0%</div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
+                    <div class="progress-bar bg-green-600 h-4 rounded-full" id="progress-bar" style="width: 0%"></div>
+                </div>
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-600" id="completed-items">0</div>
+                        <div class="text-gray-600">Completadas</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-yellow-600" id="pending-items">0</div>
+                        <div class="text-gray-600">Pendientes</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-red-600" id="urgent-items">0</div>
+                        <div class="text-gray-600">Urgentes</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-600" id="total-items">0</div>
+                        <div class="text-gray-600">Total</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Maintenance Categories -->
+    <section class="px-6 pb-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Engine & Mechanical -->
+                <div class="category-card bg-white rounded-3xl p-8 card-shadow">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mr-4">
+                            <span class="text-2xl">🔧</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Motor 2H Diesel</h3>
+                            <p class="text-gray-600">Sistema de propulsión y componentes mecánicos</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-1" data-category="engine" data-priority="high">
+                            <div class="flex-1">
+                                <label for="item-1" class="font-medium text-gray-800 cursor-pointer">Revisar nivel de aceite del motor 2H</label>
+                                <p class="text-sm text-gray-600">Verificar cada 1000km o mensualmente</p>
+                            </div>
+                            <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">Alto</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-2" data-category="engine" data-priority="high">
+                            <div class="flex-1">
+                                <label for="item-2" class="font-medium text-gray-800 cursor-pointer">Cambiar aceite y filtro (15W-40)</label>
+                                <p class="text-sm text-gray-600">Cada 5000km o 6 meses para motor diesel</p>
+                            </div>
+                            <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">Alto</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-3" data-category="engine" data-priority="medium">
+                            <div class="flex-1">
+                                <label for="item-3" class="font-medium text-gray-800 cursor-pointer">Revisar sistema de refrigeración</label>
+                                <p class="text-sm text-gray-600">Nivel de refrigerante y mangueras del 2H</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">Medio</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-4" data-category="engine" data-priority="medium">
+                            <div class="flex-1">
+                                <label for="item-4" class="font-medium text-gray-800 cursor-pointer">Revisar bomba de agua y correas</label>
+                                <p class="text-sm text-gray-600">Buscar desgaste o fugas en sistema 2H</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">Medio</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-5" data-category="engine" data-priority="low">
+                            <div class="flex-1">
+                                <label for="item-5" class="font-medium text-gray-800 cursor-pointer">Revisar filtro de aire diesel</label>
+                                <p class="text-sm text-gray-600">Cada 10000km o según condiciones de polvo</p>
+                            </div>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Bajo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transmission & Drivetrain -->
+                <div class="category-card bg-white rounded-3xl p-8 card-shadow">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                            <span class="text-2xl">⚙️</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Transmisión H41 & Tracción</h3>
+                            <p class="text-gray-600">Sistema de transmisión y tracción 4x4 del Serie 60</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-6" data-category="transmission" data-priority="high">
+                            <div class="flex-1">
+                                <label for="item-6" class="font-medium text-gray-800 cursor-pointer">Revisar nivel de aceite de caja H41</label>
+                                <p class="text-sm text-gray-600">Transmisión manual 4 velocidades</p>
+                            </div>
+                            <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">Alto</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-7" data-category="transmission" data-priority="medium">
+                            <div class="flex-1">
+                                <label for="item-7" class="font-medium text-gray-800 cursor-pointer">Revisar aceite de transfer case</label>
+                                <p class="text-sm text-gray-600">Cada 20000km para tracción 4x4</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">Medio</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-8" data-category="transmission" data-priority="medium">
+                            <div class="flex-1">
+                                <label for="item-8" class="font-medium text-gray-800 cursor-pointer">Revisar aceite de diferenciales</label>
+                                <p class="text-sm text-gray-600">Delantero y trasero Serie 60</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">Medio</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-9" data-category="transmission" data-priority="low">
+                            <div class="flex-1">
+                                <label for="item-9" class="font-medium text-gray-800 cursor-pointer">Lubricar puntos de articulación</label>
+                                <p class="text-sm text-gray-600">Suspensión y dirección Serie 60</p>
+                            </div>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Bajo</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-10" data-category="transmission" data-priority="medium">
+                            <div class="flex-1">
+                                <label for="item-10" class="font-medium text-gray-800 cursor-pointer">Revisar sistema de embrague</label>
+                                <p class="text-sm text-gray-600">Ajuste y desgaste H41</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">Medio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Electrical System -->
+                <div class="category-card bg-white rounded-3xl p-8 card-shadow">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center mr-4">
+                            <span class="text-2xl">🔌</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Sistema Eléctrico 12V</h3>
+                            <p class="text-gray-600">Batería, luces y sistema eléctrico GX</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-11" data-category="electrical" data-priority="high">
+                            <div class="flex-1">
+                                <label for="item-11" class="font-medium text-gray-800 cursor-pointer">Revisar batería 12V y conexiones</label>
+                                <p class="text-sm text-gray-600">Carga y estado de terminales Serie 60</p>
+                            </div>
+                            <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">Alto</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-12" data-category="electrical" data-priority="medium">
+                            <div class="flex-1">
+                                <label for="item-12" class="font-medium text-gray-800 cursor-pointer">Probar todas las luces del GX</label>
+                                <p class="text-sm text-gray-600">Delanteras, traseras y direccionales</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">Medio</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-13" data-category="electrical" data-priority="low">
+                            <div class="flex-1">
+                                <label for="item-13" class="font-medium text-gray-800 cursor-pointer">Revisar sistema de encendido</label>
+                                <p class="text-sm text-gray-600">Bujías, cables y distribuidor 2H</p>
+                            </div>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Bajo</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-14" data-category="electrical" data-priority="medium">
+                            <div class="flex-1">
+                                <label for="item-14" class="font-medium text-gray-800 cursor-pointer">Probar sistema de carga</label>
+                                <p class="text-sm text-gray-600">Alternador 40A y regulador GX</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">Medio</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-15" data-category="electrical" data-priority="low">
+                            <div class="flex-1">
+                                <label for="item-15" class="font-medium text-gray-800 cursor-pointer">Revisar limpiaparabrisas</label>
+                                <p class="text-sm text-gray-600">Funcionamiento y líquido Serie 60</p>
+                            </div>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Bajo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Body & Interior -->
+                <div class="category-card bg-white rounded-3xl p-8 card-shadow">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mr-4">
+                            <span class="text-2xl">🚗</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Carrocería Serie 60 & Interior</h3>
+                            <p class="text-gray-600">Chasis, carrocería y componentes internos GX</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-16" data-category="body" data-priority="medium">
+                            <div class="flex-1">
+                                <label for="item-16" class="font-medium text-gray-800 cursor-pointer">Revisar presión de llantas 7.50R16</label>
+                                <p class="text-sm text-gray-600">Incluir llanta de repuesto Serie 60</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">Medio</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-17" data-category="body" data-priority="medium">
+                            <div class="flex-1">
+                                <label for="item-17" class="font-medium text-gray-800 cursor-pointer">Revisar estado de llantas todo terreno</label>
+                                <p class="text-sm text-gray-600">Desgaste y daños visibles GX</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">Medio</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-18" data-category="body" data-priority="low">
+                            <div class="flex-1">
+                                <label for="item-18" class="font-medium text-gray-800 cursor-pointer">Revisar frenos disco/tambor</label>
+                                <p class="text-sm text-gray-600">Pastillas y discos delanteros, tambores traseros</p>
+                            </div>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Bajo</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-19" data-category="body" data-priority="low">
+                            <div class="flex-1">
+                                <label for="item-19" class="font-medium text-gray-800 cursor-pointer">Revisar suspensiones ballesta</label>
+                                <p class="text-sm text-gray-600">Amortiguadores y ballestas Serie 60</p>
+                            </div>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Bajo</span>
+                        </div>
+
+                        <div class="checklist-item flex items-center p-4 rounded-xl border border-gray-200">
+                            <input type="checkbox" class="checkbox-custom mr-4" id="item-20" data-category="body" data-priority="low">
+                            <div class="flex-1">
+                                <label for="item-20" class="font-medium text-gray-800 cursor-pointer">Revisar chasis Serie 60 por oxidación</label>
+                                <p class="text-sm text-gray-600">Tratamiento anti-corrosión GX</p>
+                            </div>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Bajo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-center space-x-4 mt-8">
+                <button onclick="resetAllChecks()" class="px-8 py-3 bg-gray-600 text-white rounded-xl font-medium hover:bg-gray-700 transition-colors">
+                    Reiniciar Todo
+                </button>
+                <button onclick="saveProgress()" class="px-8 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition-colors">
+                    Guardar Progreso
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-gray-400">© 2024 Land Cruiser 84 Restoration App. Manteniendo la leyenda viva.</p>
+        </div>
+    </footer>
+
+    <script>
+        let totalItems = 0;
+        let completedItems = 0;
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox-custom');
+            totalItems = checkboxes.length;
+            completedItems = document.querySelectorAll('.checkbox-custom:checked').length;
+            
+            const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+            
+            document.getElementById('overall-progress').textContent = percentage + '%';
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            document.getElementById('completed-items').textContent = completedItems;
+            document.getElementById('pending-items').textContent = totalItems - completedItems;
+            document.getElementById('urgent-items').textContent = document.querySelectorAll('.checkbox-custom:checked[data-priority="high"]').length;
+            document.getElementById('total-items').textContent = totalItems;
+            
+            // Animate progress bar
+            anime({
+                targets: '#progress-bar',
+                width: percentage + '%',
+                duration: 500,
+                easing: 'easeInOutQuad'
+            });
+        }
+
+        function resetAllChecks() {
+            document.querySelectorAll('.checkbox-custom').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            updateProgress();
+            
+            // Animate reset
+            anime({
+                targets: '.checklist-item',
+                scale: [0.95, 1],
+                duration: 300,
+                delay: anime.stagger(50),
+                easing: 'easeOutQuad'
+            });
+        }
+
+        function saveProgress() {
+            const progress = {
+                completed: Array.from(document.querySelectorAll('.checkbox-custom:checked')).map(cb => cb.id),
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('landcruiser-maintenance-progress', JSON.stringify(progress));
+            
+            // Show success message
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '¡Guardado!';
+            button.style.backgroundColor = '#22c55e';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.backgroundColor = '';
+            }, 2000);
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('landcruiser-maintenance-progress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                progress.completed.forEach(id => {
+                    const checkbox = document.getElementById(id);
+                    if (checkbox) checkbox.checked = true;
+                });
+            }
+            updateProgress();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners to all checkboxes
+            document.querySelectorAll('.checkbox-custom').forEach(checkbox => {
+                checkbox.addEventListener('change', updateProgress);
+            });
+            
+            // Load saved progress
+            loadProgress();
+            
+            // Animate cards on load
+            anime({
+                targets: '.category-card',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(200),
+                duration: 800,
+                easing: 'easeOutQuad'
+            });
+        });
+    </script>
+</body>
+</html>

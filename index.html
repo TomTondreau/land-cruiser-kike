@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Cruiser 84 - Restauración & Mantenimiento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f3f0 0%, #e8e3dc 100%);
+            min-height: 100vh;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            background: linear-gradient(135deg, #2d3a2b 0%, #4a5d45 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .land-cruiser-bg {
+            background: linear-gradient(45deg, #6b7c5a 0%, #8fa068 50%, #a8b885 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 20px 40px rgba(45, 58, 43, 0.1);
+        }
+        .color-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        .color-option.selected {
+            transform: scale(1.15);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: #4a5d45;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4a5d45;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .vehicle-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-sm fixed w-full top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-green-700 to-green-900 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">GX</span>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">Land Cruiser 84</h1>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Inicio</a>
+                    <a href="checklist.html" class="nav-link text-gray-700 font-medium">Checklist</a>
+                    <a href="gallery.html" class="nav-link text-gray-700 font-medium">Galería</a>
+                    <a href="specs.html" class="nav-link text-gray-700 font-medium">Especificaciones</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h1 class="hero-title text-6xl md:text-8xl mb-6">Land Cruiser</h1>
+                <p class="text-2xl text-gray-600 mb-4">Restauración & Mantenimiento</p>
+                <p class="text-lg text-gray-500 max-w-2xl mx-auto">Tu compañero digital para mantener el legendario Toyota Land Cruiser GX Serie 60 de 1984 en condiciones óptimas</p>
+            </div>
+
+            <!-- Vehicle Color Selector -->
+            <div class="bg-white rounded-3xl p-8 card-shadow mb-16">
+                <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Elige el Color de Tu Land Cruiser GX</h2>
+                <div class="flex justify-center mb-8">
+                    <div class="vehicle-container">
+                        <svg width="500" height="280" viewBox="0 0 500 280" class="mx-auto">
+                            <!-- Land Cruiser GX Serie 60 SVG más detallado -->
+                            <g id="land-cruiser-svg" transform="translate(50, 40)">
+                                <!-- Carrocería principal -->
+                                <rect x="0" y="80" width="400" height="120" rx="8" fill="#4a5d45" id="car-body"/>
+                                
+                                <!-- Cabina delantera -->
+                                <rect x="60" y="20" width="180" height="90" rx="8" fill="#4a5d45" id="car-cabin"/>
+                                
+                                <!-- Techo -->
+                                <rect x="70" y="15" width="160" height="30" rx="5" fill="#4a5d45" id="car-roof"/>
+                                
+                                <!-- Ventanas laterales -->
+                                <rect x="80" y="35" width="140" height="60" rx="4" fill="#87ceeb" opacity="0.6" id="side-windows"/>
+                                
+                                <!-- Ventana delantera -->
+                                <polygon points="250,25 250,90 290,90 290,30" fill="#87ceeb" opacity="0.6" id="windshield"/>
+                                
+                                <!-- Ventana trasera -->
+                                <rect x="10" y="95" width="70" height="55" rx="4" fill="#87ceeb" opacity="0.6" id="rear-window"/>
+                                
+                                <!-- Puertas delanteras -->
+                                <rect x="90" y="85" width="75" height="105" rx="5" fill="none" stroke="#2d3a2b" stroke-width="2" opacity="0.3"/>
+                                <rect x="175" y="85" width="75" height="105" rx="5" fill="none" stroke="#2d3a2b" stroke-width="2" opacity="0.3"/>
+                                
+                                <!-- Puerta trasera -->
+                                <rect x="260" y="85" width="80" height="105" rx="5" fill="none" stroke="#2d3a2b" stroke-width="2" opacity="0.3"/>
+                                
+                                <!-- Llantas -->
+                                <circle cx="80" cy="210" r="30" fill="#2d3a2b" stroke="#1a1a1a" stroke-width="3"/>
+                                <circle cx="160" cy="210" r="30" fill="#2d3a2b" stroke="#1a1a1a" stroke-width="3"/>
+                                <circle cx="240" cy="210" r="30" fill="#2d3a2b" stroke="#1a1a1a" stroke-width="3"/>
+                                <circle cx="320" cy="210" r="30" fill="#2d3a2b" stroke="#1a1a1a" stroke-width="3"/>
+                                
+                                <!-- Parachoques -->
+                                <rect x="-15" y="180" width="70" height="30" rx="15" fill="#696969" id="front-bumper"/>
+                                <rect x="355" y="180" width="70" height="30" rx="15" fill="#696969" id="rear-bumper"/>
+                                
+                                <!-- Faros principales -->
+                                <ellipse cx="340" cy="140" rx="15" ry="20" fill="#fffacd" id="headlight1"/>
+                                <ellipse cx="340" cy="165" rx="15" ry="20" fill="#fffacd" id="headlight2"/>
+                                
+                                <!-- Faros antiniebla -->
+                                <circle cx="320" cy="195" r="8" fill="#fffacd" opacity="0.8"/>
+                                <circle cx="360" cy="195" r="8" fill="#fffacd" opacity="0.8"/>
+                                
+                                <!-- Manijas de puertas -->
+                                <rect x="125" y="125" width="15" height="8" rx="4" fill="#2d3a2b"/>
+                                <rect x="210" y="125" width="15" height="8" rx="4" fill="#2d3a2b"/>
+                                <rect x="295" y="125" width="15" height="8" rx="4" fill="#2d3a2b"/>
+                                
+                                <!-- Espejos retrovisores -->
+                                <ellipse cx="85" y="75" rx="12" ry="8" fill="#696969"/>
+                                <ellipse cx="215" y="75" rx="12" ry="8" fill="#696969"/>
+                                
+                                <!-- Características del techo -->
+                                <rect x="100" y="10" width="40" height="20" rx="3" fill="#87ceeb" opacity="0.4" id="roof-window"/>
+                                <rect x="160" y="10" width="40" height="20" rx="3" fill="#87ceeb" opacity="0.4"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center space-x-4 flex-wrap">
+                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #4a5d45" 
+                         data-color="#4a5d45" 
+                         onclick="changeVehicleColor('#4a5d45')"></div>
+                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #8b4513" 
+                         data-color="#8b4513" 
+                         onclick="changeVehicleColor('#8b4513')"></div>
+                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #696969" 
+                         data-color="#696969" 
+                         onclick="changeVehicleColor('#696969')"></div>
+                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #2f4f2f" 
+                         data-color="#2f4f2f" 
+                         onclick="changeVehicleColor('#2f4f2f')"></div>
+                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #8b0000" 
+                         data-color="#8b0000" 
+                         onclick="changeVehicleColor('#8b0000')"></div>
+                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
+                         style="background-color: #4682b4" 
+                         data-color="#4682b4" 
+                         onclick="changeVehicleColor('#4682b4')"></div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-2xl p-6 card-shadow text-center">
+                    <div class="text-4xl font-bold text-green-700 mb-2">1984</div>
+                    <div class="text-gray-600">Año del Modelo</div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 card-shadow text-center">
+                    <div class="text-4xl font-bold text-green-700 mb-2">GX</div>
+                    <div class="text-gray-600">Serie 60</div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 card-shadow text-center">
+                    <div class="text-4xl font-bold text-green-700 mb-2">4.0L</div>
+                    <div class="text-gray-600">Motor 2H Diesel</div>
+                </div>
+            </div>
+
+            <!-- Maintenance Overview -->
+            <div class="bg-white rounded-3xl p-8 card-shadow">
+                <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Estado de Mantenimiento</h2>
+                <div id="maintenance-chart" style="height: 400px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-gray-400">© 2024 Land Cruiser 84 Restoration App. Manteniendo la leyenda viva.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Color selector functionality
+        function changeVehicleColor(color) {
+            // Cambiar color de todos los elementos de la carrocería
+            document.getElementById('car-body').setAttribute('fill', color);
+            document.getElementById('car-cabin').setAttribute('fill', color);
+            document.getElementById('car-roof').setAttribute('fill', color);
+            
+            // Update selected color
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-color="${color}"]`).classList.add('selected');
+            
+            // Animate color change
+            anime({
+                targets: '#land-cruiser-svg',
+                scale: [1, 1.02, 1],
+                duration: 600,
+                easing: 'easeInOutQuad'
+            });
+        }
+
+        // Initialize with default color
+        document.addEventListener('DOMContentLoaded', function() {
+            changeVehicleColor('#4a5d45');
+            
+            // Initialize maintenance chart
+            const chartDom = document.getElementById('maintenance-chart');
+            const myChart = echarts.init(chartDom);
+            
+            const option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center'
+                },
+                series: [
+                    {
+                        name: 'Estado de Mantenimiento',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderRadius: 10,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: 20,
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: [
+                            { value: 82, name: 'En Óptimas Condiciones', itemStyle: { color: '#22c55e' } },
+                            { value: 12, name: 'Requiere Atención', itemStyle: { color: '#eab308' } },
+                            { value: 6, name: 'Necesita Reparación', itemStyle: { color: '#ef4444' } }
+                        ]
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+            
+            // Animate elements on load
+            anime({
+                targets: '.card-shadow',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(200),
+                duration: 800,
+                easing: 'easeOutQuad'
+            });
+        });
+    </script>
+</body>
+</html>
