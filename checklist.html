@@ -401,7 +401,7 @@
                 <button onclick="resetAllChecks()" class="px-8 py-3 bg-gray-600 text-white rounded-xl font-medium hover:bg-gray-700 transition-colors">
                     Reiniciar Todo
                 </button>
-                <button onclick="saveProgress()" class="px-8 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors">
+                <button onclick="saveProgress(event)" class="px-8 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors">
                     Guardar Progreso
                 </button>
             </div>
@@ -467,24 +467,24 @@
                 });
             }
 
-            function saveProgress() {
-                const progress = {
-                    completed: Array.from(document.querySelectorAll('.checkbox-custom:checked')).map(cb => cb.id),
-                    timestamp: new Date().toISOString()
-                };
-                localStorage.setItem('landcruiser-maintenance-progress', JSON.stringify(progress));
-                
-                // Show success message
-                const button = event.target;
-                const originalText = button.textContent;
-                button.textContent = '¡Guardado!';
-                button.style.backgroundColor = '#22c55e';
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.backgroundColor = '';
-                }, 2000);
-            }
+            function saveProgress(event) {
+            const progress = {
+                completed: Array.from(document.querySelectorAll('.checkbox-custom:checked')).map(cb => cb.id),
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('landcruiser-maintenance-progress', JSON.stringify(progress));
+            
+            // Show success message
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '¡Guardado!';
+            button.style.backgroundColor = '#A72222';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.backgroundColor = '';
+            }, 2000);
+        }
 
             function loadProgress() {
                 const saved = localStorage.getItem('landcruiser-maintenance-progress');
