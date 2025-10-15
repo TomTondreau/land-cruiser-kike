@@ -104,7 +104,15 @@
                     </div>
                     <h1 class="text-xl font-bold text-gray-800">El Land Cruiser del Kike Fritis</h1>
                 </div>
-                <div class="flex space-x-8">
+                <!-- Hamburger button -->
+                <div class="md:hidden">
+                    <button id="menu-btn" class="p-2 rounded-md hover:bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="menu" class="hidden md:flex md:space-x-8 absolute md:relative top-16 left-0 w-full bg-white/90 md:bg-transparent p-4 md:p-0 flex-col md:flex-row space-y-4 md:space-y-0">
                     <a href="index.html" class="nav-link text-gray-700 font-medium">Inicio</a>
                     <a href="checklist.html" class="nav-link text-gray-700 font-medium">Checklist</a>
                     <a href="gallery.html" class="nav-link text-green-700 font-medium">Galería</a>
@@ -185,7 +193,16 @@
     </footer>
 
     <script>
-        const galleryImages = [
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu
+            const menuBtn = document.getElementById('menu-btn');
+            const menu = document.getElementById('menu');
+
+            menuBtn.addEventListener('click', function() {
+                menu.classList.toggle('hidden');
+            });
+
+            const galleryImages = [
             {
                 src: "https://kimi-web-img.moonshot.cn/img/flexmotor.com/0017fdf0b6c9f2b91c9614541df925c8a3156526.jpg",
                 alt: "GX60 Classic Green",

@@ -92,7 +92,15 @@
                     </div>
                     <h1 class="text-xl font-bold text-gray-800">El Land Cruiser del Kike Fritis</h1>
                 </div>
-                <div class="flex space-x-8">
+                <!-- Hamburger button -->
+                <div class="md:hidden">
+                    <button id="menu-btn" class="p-2 rounded-md hover:bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="menu" class="hidden md:flex md:space-x-8 absolute md:relative top-16 left-0 w-full bg-white/90 md:bg-transparent p-4 md:p-0 flex-col md:flex-row space-y-4 md:space-y-0">
                     <a href="index.html" class="nav-link text-gray-700 font-medium">Inicio</a>
                     <a href="checklist.html" class="nav-link text-green-700 font-medium">Checklist</a>
                     <a href="gallery.html" class="nav-link text-gray-700 font-medium">Galería</a>
@@ -408,81 +416,89 @@
     </footer>
 
     <script>
-        let totalItems = 0;
-        let completedItems = 0;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu
+            const menuBtn = document.getElementById('menu-btn');
+            const menu = document.getElementById('menu');
 
-        function updateProgress() {
-            const checkboxes = document.querySelectorAll('.checkbox-custom');
-            totalItems = checkboxes.length;
-            completedItems = document.querySelectorAll('.checkbox-custom:checked').length;
-            
-            const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
-            
-            document.getElementById('overall-progress').textContent = percentage + '%';
-            document.getElementById('progress-bar').style.width = percentage + '%';
-            document.getElementById('completed-items').textContent = completedItems;
-            document.getElementById('pending-items').textContent = totalItems - completedItems;
-            document.getElementById('urgent-items').textContent = document.querySelectorAll('.checkbox-custom:checked[data-priority="high"]').length;
-            document.getElementById('total-items').textContent = totalItems;
-            
-            // Animate progress bar
-            anime({
-                targets: '#progress-bar',
-                width: percentage + '%',
-                duration: 500,
-                easing: 'easeInOutQuad'
+            menuBtn.addEventListener('click', function() {
+                menu.classList.toggle('hidden');
             });
-        }
 
-        function resetAllChecks() {
-            document.querySelectorAll('.checkbox-custom').forEach(checkbox => {
-                checkbox.checked = false;
-            });
-            updateProgress();
-            
-            // Animate reset
-            anime({
-                targets: '.checklist-item',
-                scale: [0.95, 1],
-                duration: 300,
-                delay: anime.stagger(50),
-                easing: 'easeOutQuad'
-            });
-        }
+            let totalItems = 0;
+            let completedItems = 0;
 
-        function saveProgress() {
-            const progress = {
-                completed: Array.from(document.querySelectorAll('.checkbox-custom:checked')).map(cb => cb.id),
-                timestamp: new Date().toISOString()
-            };
-            localStorage.setItem('landcruiser-maintenance-progress', JSON.stringify(progress));
-            
-            // Show success message
-            const button = event.target;
-            const originalText = button.textContent;
-            button.textContent = '¡Guardado!';
-            button.style.backgroundColor = '#22c55e';
-            
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.style.backgroundColor = '';
-            }, 2000);
-        }
-
-        function loadProgress() {
-            const saved = localStorage.getItem('landcruiser-maintenance-progress');
-            if (saved) {
-                const progress = JSON.parse(saved);
-                progress.completed.forEach(id => {
-                    const checkbox = document.getElementById(id);
-                    if (checkbox) checkbox.checked = true;
+            function updateProgress() {
+                const checkboxes = document.querySelectorAll('.checkbox-custom');
+                totalItems = checkboxes.length;
+                completedItems = document.querySelectorAll('.checkbox-custom:checked').length;
+                
+                const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+                
+                document.getElementById('overall-progress').textContent = percentage + '%';
+                document.getElementById('progress-bar').style.width = percentage + '%';
+                document.getElementById('completed-items').textContent = completedItems;
+                document.getElementById('pending-items').textContent = totalItems - completedItems;
+                document.getElementById('urgent-items').textContent = document.querySelectorAll('.checkbox-custom:checked[data-priority="high"]').length;
+                document.getElementById('total-items').textContent = totalItems;
+                
+                // Animate progress bar
+                anime({
+                    targets: '#progress-bar',
+                    width: percentage + '%',
+                    duration: 500,
+                    easing: 'easeInOutQuad'
                 });
             }
-            updateProgress();
-        }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+            function resetAllChecks() {
+                document.querySelectorAll('.checkbox-custom').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                updateProgress();
+                
+                // Animate reset
+                anime({
+                    targets: '.checklist-item',
+                    scale: [0.95, 1],
+                    duration: 300,
+                    delay: anime.stagger(50),
+                    easing: 'easeOutQuad'
+                });
+            }
+
+            function saveProgress() {
+                const progress = {
+                    completed: Array.from(document.querySelectorAll('.checkbox-custom:checked')).map(cb => cb.id),
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('landcruiser-maintenance-progress', JSON.stringify(progress));
+                
+                // Show success message
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '¡Guardado!';
+                button.style.backgroundColor = '#22c55e';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.backgroundColor = '';
+                }, 2000);
+            }
+
+            function loadProgress() {
+                const saved = localStorage.getItem('landcruiser-maintenance-progress');
+                if (saved) {
+                    const progress = JSON.parse(saved);
+                    progress.completed.forEach(id => {
+                        const checkbox = document.getElementById(id);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+                updateProgress();
+            }
+
+            // Initialize
             // Add event listeners to all checkboxes
             document.querySelectorAll('.checkbox-custom').forEach(checkbox => {
                 checkbox.addEventListener('change', updateProgress);
