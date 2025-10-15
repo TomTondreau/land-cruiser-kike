@@ -97,41 +97,11 @@
                 <p class="text-lg text-gray-500 max-w-2xl mx-auto">Tu compañero digital para mantener el legendario Toyota Land Cruiser GX Serie 60 de 1984 en condiciones óptimas</p>
             </div>
 
-            <!-- Vehicle Color Selector -->
+            <!-- 360 Viewer -->
             <div class="bg-white rounded-3xl p-8 card-shadow mb-16">
-                <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Elige el Color de Tu Land Cruiser GX</h2>
-                <div class="flex justify-center mb-8">
-                    <div class="vehicle-container" style="max-width: 500px; margin-left: auto; margin-right: auto;">
-                        <img id="land-cruiser-image" src="landcruiser_gx60_illustration.png" alt="Land Cruiser GX Serie 60" class="mx-auto">
-                    </div>
-                </div>
-                
-                <div class="flex justify-center space-x-4 flex-wrap">
-                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #4a5d45" 
-                         data-color="green" 
-                         onclick="changeVehicleColor('green')"></div>
-                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #D2C6A8" 
-                         data-color="beige" 
-                         onclick="changeVehicleColor('beige')"></div>
-                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #B87333" 
-                         data-color="copper" 
-                         onclick="changeVehicleColor('copper')"></div>
-                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #668783" 
-                         data-color="blue" 
-                         onclick="changeVehicleColor('blue')"></div>
-                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #A72222" 
-                         data-color="red" 
-                         onclick="changeVehicleColor('red')"></div>
-                    <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #FFFFFF" 
-                         data-color="white" 
-                         onclick="changeVehicleColor('white')"></div>
-                </div>
+                <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Gira el Land Cruiser</h2>
+                <div id="viewer-360" style="width: 500px; height: 300px; margin: auto; cursor: grab; background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+                <p class="text-center text-gray-500 mt-4">Arrastra la imagen para girar el vehículo</p>
             </div>
 
             <!-- Quick Stats -->
@@ -166,42 +136,59 @@
     </footer>
 
     <script>
-        // Color selector functionality
-        function changeVehicleColor(color) {
-            const image = document.getElementById('land-cruiser-image');
-            const colorFilters = {
-                'green': 'none',
-                'beige': 'sepia(0.5) saturate(1.5) hue-rotate(-20deg) brightness(1.2)',
-                'copper': 'sepia(0.8) saturate(2) hue-rotate(-40deg) brightness(1.1)',
-                'blue': 'sepia(0.3) saturate(1.5) hue-rotate(180deg) brightness(1.0)',
-                'red': 'sepia(0.5) saturate(3) hue-rotate(-60deg) brightness(1.0)',
-                'white': 'grayscale(1) brightness(1.5)',
-            };
-
-            image.style.filter = colorFilters[color];
-            
-            // Guardar el color seleccionado
-            localStorage.setItem('selectedVehicleColor', color);
-
-            // Update selected color
-            document.querySelectorAll('.color-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            document.querySelector(`[data-color="${color}"]`).classList.add('selected');
-            
-            // Animate color change
-            anime({
-                targets: '#land-cruiser-image',
-                scale: [1, 1.02, 1],
-                duration: 600,
-                easing: 'easeInOutQuad'
-            });
-        }
-
-        // Initialize with default color
         document.addEventListener('DOMContentLoaded', function() {
-            changeVehicleColor('green');
-            
+            const viewer = document.getElementById('viewer-360');
+            const images = [
+                'jeep_360_01.png',
+                'jeep_360_02.png',
+                'jeep_360_03.png',
+                'jeep_360_04.png',
+                'jeep_360_05.png',
+                'jeep_360_06.png',
+                'jeep_360_07.png',
+                'jeep_360_08.png'
+            ];
+            let currentFrame = 0;
+            let isDragging = false;
+            let startX = 0;
+            let lastX = 0;
+
+            // Preload images
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+
+            viewer.style.backgroundImage = `url(${images[0]})`;
+
+            viewer.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                startX = e.clientX;
+                lastX = startX;
+                viewer.style.cursor = 'grabbing';
+            });
+
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+                viewer.style.cursor = 'grab';
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+
+                const deltaX = e.clientX - lastX;
+                lastX = e.clientX;
+
+                // Adjust frame based on drag direction
+                if (deltaX > 10) { // Drag right - increased threshold for smoother rotation
+                    currentFrame = (currentFrame + 1) % images.length;
+                    viewer.style.backgroundImage = `url(${images[currentFrame]})`;
+                } else if (deltaX < -10) { // Drag left - increased threshold
+                    currentFrame = (currentFrame - 1 + images.length) % images.length;
+                    viewer.style.backgroundImage = `url(${images[currentFrame]})`;
+                }
+            });
+
             // Initialize maintenance chart
             const chartDom = document.getElementById('maintenance-chart');
             const myChart = echarts.init(chartDom);
