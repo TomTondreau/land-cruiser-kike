@@ -398,10 +398,10 @@
 
             <!-- Action Buttons -->
             <div class="flex justify-center space-x-4 mt-8">
-                <button onclick="resetAllChecks()" class="px-8 py-3 bg-gray-600 text-white rounded-xl font-medium hover:bg-gray-700 transition-colors">
+                <button id="reset-btn" class="px-8 py-3 bg-gray-600 text-white rounded-xl font-medium hover:bg-gray-700 transition-colors">
                     Reiniciar Todo
                 </button>
-                <button onclick="saveProgress(event)" class="px-8 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors">
+                <button id="save-btn" class="px-8 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors">
                     Guardar Progreso
                 </button>
             </div>
@@ -467,24 +467,24 @@
                 });
             }
 
-            function saveProgress(event) {
-            const progress = {
-                completed: Array.from(document.querySelectorAll('.checkbox-custom:checked')).map(cb => cb.id),
-                timestamp: new Date().toISOString()
-            };
-            localStorage.setItem('landcruiser-maintenance-progress', JSON.stringify(progress));
-            
-            // Show success message
-            const button = event.target;
-            const originalText = button.textContent;
-            button.textContent = '¡Guardado!';
-            button.style.backgroundColor = '#A72222';
-            
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.style.backgroundColor = '';
-            }, 2000);
-        }
+            function saveProgress() {
+                const progress = {
+                    completed: Array.from(document.querySelectorAll('.checkbox-custom:checked')).map(cb => cb.id),
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('landcruiser-maintenance-progress', JSON.stringify(progress));
+                
+                // Show success message
+                const button = document.getElementById('save-btn');
+                const originalText = button.textContent;
+                button.textContent = '¡Guardado!';
+                button.style.backgroundColor = '#A72222';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.backgroundColor = '';
+                }, 2000);
+            }
 
             function loadProgress() {
                 const saved = localStorage.getItem('landcruiser-maintenance-progress');
@@ -499,6 +499,12 @@
             }
 
             // Initialize
+            const resetBtn = document.getElementById('reset-btn');
+            const saveBtn = document.getElementById('save-btn');
+
+            resetBtn.addEventListener('click', resetAllChecks);
+            saveBtn.addEventListener('click', saveProgress);
+
             // Add event listeners to all checkboxes
             document.querySelectorAll('.checkbox-custom').forEach(checkbox => {
                 checkbox.addEventListener('change', updateProgress);
