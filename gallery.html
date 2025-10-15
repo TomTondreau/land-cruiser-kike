@@ -404,6 +404,23 @@
             
             // Populate gallery
             populateGallery();
+
+            // Check for a color from the home page
+            const selectedColor = localStorage.getItem('selectedVehicleColor');
+            if (selectedColor) {
+                const colorMap = {
+                    '#4a5d45': 'green',
+                    '#8b4513': 'brown',
+                    '#696969': 'gray',
+                    '#2f4f2f': 'dark-green',
+                    '#8b0000': 'red',
+                    '#4682b4': 'blue'
+                };
+                const colorNameToFilter = colorMap[selectedColor];
+                if (colorNameToFilter) {
+                    filterByColor(colorNameToFilter);
+                }
+            }
             
             // Animate sections on load
             anime({
