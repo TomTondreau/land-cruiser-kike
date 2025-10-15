@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Land Cruiser 84 - Restauración & Mantenimiento</title>
+    <title>El Land Cruiser del Kike Fritis</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
@@ -102,79 +102,37 @@
                 <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Elige el Color de Tu Land Cruiser GX</h2>
                 <div class="flex justify-center mb-8">
                     <div class="vehicle-container">
-                        <svg width="500" height="300" viewBox="0 0 550 300" class="mx-auto">
-    <defs>
-        <linearGradient id="car-body-gradient" x1="0.5" y1="0" x2="0.5" y2="1">
-            <stop offset="0%" stop-color="white" stop-opacity="0.3" />
-            <stop offset="100%" stop-color="black" stop-opacity="0.1" />
-        </linearGradient>
-        <linearGradient id="window-gradient" x1="0.5" y1="0" x2="0.5" y2="1">
-            <stop offset="0%" stop-color="#E0F2F1" stop-opacity="0.9" />
-            <stop offset="100%" stop-color="#B2DFDB" stop-opacity="0.9" />
-        </linearGradient>
-    </defs>
-    <g id="land-cruiser-svg" transform="translate(20, 20)">
-        <!-- Sombra -->
-        <ellipse cx="275" cy="270" rx="220" ry="15" fill="#000" opacity="0.15" />
-
-        <!-- Carrocería -->
-        <path id="car-body" fill="#4a5d45" d="M 50,180 C 40,170 40,150 50,140 L 80,100 L 200,90 L 450,90 L 500,140 C 510,150 510,170 500,180 L 500,250 C 500,260 490,270 480,270 L 70,270 C 60,270 50,260 50,250 Z" />
-        <path id="car-cabin" fill="#4a5d45" d="M 210,90 L 440,90 L 480,180 L 210,180 Z" />
-        <path fill="url(#car-body-gradient)" d="M 50,180 C 40,170 40,150 50,140 L 80,100 L 200,90 L 450,90 L 500,140 C 510,150 510,170 500,180 L 500,250 C 500,260 490,270 480,270 L 70,270 C 60,270 50,260 50,250 Z" />
-        <path fill="url(#car-body-gradient)" d="M 210,90 L 440,90 L 480,180 L 210,180 Z" />
-
-        <!-- Ventanas -->
-        <path id="side-windows" fill="url(#window-gradient)" d="M 220,100 L 430,100 L 465,170 L 220,170 Z" />
-        <path stroke="#444" stroke-width="2" fill="none" d="M 330,100 L 330,170" />
-
-        <!-- Ruedas -->
-        <g class="wheel" transform="translate(130, 250)">
-            <circle r="40" fill="#222" />
-            <circle r="18" fill="#aaa" />
-            <circle r="5" fill="#333" />
-        </g>
-        <g class="wheel" transform="translate(420, 250)">
-            <circle r="40" fill="#222" />
-            <circle r="18" fill="#aaa" />
-            <circle r="5" fill="#333" />
-        </g>
-
-        <!-- Detalles -->
-        <rect x="30" y="170" width="500" height="10" fill="#333" opacity="0.2" />
-        <rect x="40" y="240" width="470" height="30" fill="#aaa" rx="5" />
-        <rect x="50" y="110" width="20" height="10" fill="#ffdd00" />
-        <rect x="480" y="110" width="20" height="10" fill="#ff4444" />
-        <rect x="200" y="180" width="10" height="15" fill="#333" opacity="0.4" />
-    </g>
-</svg>
+                                            <div class="vehicle-container">
+                        <img id="land-cruiser-image" src="landcruiser_gx60_illustration.png" alt="Land Cruiser GX Serie 60" class="mx-auto">
+                    </div>
                     </div>
                 </div>
                 
                 <div class="flex justify-center space-x-4 flex-wrap">
                     <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
                          style="background-color: #4a5d45" 
-                         data-color="#4a5d45" 
-                         onclick="changeVehicleColor('#4a5d45')"></div>
+                         data-color="green" 
+                         onclick="changeVehicleColor('green')"></div>
                     <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #8b4513" 
-                         data-color="#8b4513" 
-                         onclick="changeVehicleColor('#8b4513')"></div>
+                         style="background-color: #D2C6A8" 
+                         data-color="beige" 
+                         onclick="changeVehicleColor('beige')"></div>
                     <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #696969" 
-                         data-color="#696969" 
-                         onclick="changeVehicleColor('#696969')"></div>
+                         style="background-color: #B87333" 
+                         data-color="copper" 
+                         onclick="changeVehicleColor('copper')"></div>
                     <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #2f4f2f" 
-                         data-color="#2f4f2f" 
-                         onclick="changeVehicleColor('#2f4f2f')"></div>
+                         style="background-color: #668783" 
+                         data-color="blue" 
+                         onclick="changeVehicleColor('blue')"></div>
                     <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #8b0000" 
-                         data-color="#8b0000" 
-                         onclick="changeVehicleColor('#8b0000')"></div>
+                         style="background-color: #A72222" 
+                         data-color="red" 
+                         onclick="changeVehicleColor('red')"></div>
                     <div class="color-option w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #4682b4" 
-                         data-color="#4682b4" 
-                         onclick="changeVehicleColor('#4682b4')"></div>
+                         style="background-color: #FFFFFF" 
+                         data-color="white" 
+                         onclick="changeVehicleColor('white')"></div>
                 </div>
             </div>
 
@@ -212,9 +170,17 @@
     <script>
         // Color selector functionality
         function changeVehicleColor(color) {
-            // Cambiar color de todos los elementos de la carrocería
-            document.getElementById('car-body').setAttribute('fill', color);
-            document.getElementById('car-cabin').setAttribute('fill', color);
+            const image = document.getElementById('land-cruiser-image');
+            const colorFilters = {
+                'green': 'none',
+                'beige': 'sepia(0.5) saturate(1.5) hue-rotate(-20deg) brightness(1.2)',
+                'copper': 'sepia(0.8) saturate(2) hue-rotate(-40deg) brightness(1.1)',
+                'blue': 'sepia(0.3) saturate(1.5) hue-rotate(180deg) brightness(1.0)',
+                'red': 'sepia(0.5) saturate(3) hue-rotate(-60deg) brightness(1.0)',
+                'white': 'grayscale(1) brightness(1.5)',
+            };
+
+            image.style.filter = colorFilters[color];
             
             // Guardar el color seleccionado
             localStorage.setItem('selectedVehicleColor', color);
@@ -227,7 +193,7 @@
             
             // Animate color change
             anime({
-                targets: '#land-cruiser-svg',
+                targets: '#land-cruiser-image',
                 scale: [1, 1.02, 1],
                 duration: 600,
                 easing: 'easeInOutQuad'
@@ -236,7 +202,7 @@
 
         // Initialize with default color
         document.addEventListener('DOMContentLoaded', function() {
-            changeVehicleColor('#4a5d45');
+            changeVehicleColor('green');
             
             // Initialize maintenance chart
             const chartDom = document.getElementById('maintenance-chart');

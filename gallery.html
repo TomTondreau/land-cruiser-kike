@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería - Land Cruiser 84</title>
+    <title>El Land Cruiser del Kike Fritis</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
@@ -136,25 +136,25 @@
                          data-color="green" 
                          onclick="filterByColor('green')"></div>
                     <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #8b4513" 
-                         data-color="brown" 
-                         onclick="filterByColor('brown')"></div>
+                         style="background-color: #D2C6A8" 
+                         data-color="beige" 
+                         onclick="filterByColor('beige')"></div>
                     <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #696969" 
-                         data-color="gray" 
-                         onclick="filterByColor('gray')"></div>
+                         style="background-color: #B87333" 
+                         data-color="copper" 
+                         onclick="filterByColor('copper')"></div>
                     <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #2f4f2f" 
-                         data-color="dark-green" 
-                         onclick="filterByColor('dark-green')"></div>
+                         style="background-color: #668783" 
+                         data-color="blue" 
+                         onclick="filterByColor('blue')"></div>
                     <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #8b0000" 
+                         style="background-color: #A72222" 
                          data-color="red" 
                          onclick="filterByColor('red')"></div>
                     <div class="color-filter w-16 h-16 rounded-full border-4 border-white shadow-lg" 
-                         style="background-color: #4682b4" 
-                         data-color="blue" 
-                         onclick="filterByColor('blue')"></div>
+                         style="background-color: #FFFFFF" 
+                         data-color="white" 
+                         onclick="filterByColor('white')"></div>
                 </div>
             </div>
         </div>
@@ -231,14 +231,14 @@
             {
                 src: "https://kimi-web-img.moonshot.cn/img/i.pinimg.com/443827797359d70b1d4bd3969df60406be43902f.jpg",
                 alt: "GX60 Vintage Beige",
-                color: "brown",
+                color: "beige",
                 title: "GX60 Vintage Beige"
             },
             {
                 src: "https://kimi-web-img.moonshot.cn/img/cdn.motor1.com/0b403cd4efedfede15fa6bcc560e525a1d1ee9d7.webp",
-                alt: "GX60 Gray Classic",
-                color: "gray",
-                title: "GX60 Gris Clásico"
+                alt: "GX60 White Classic",
+                color: "white",
+                title: "GX60 Blanco Clásico"
             },
             {
                 src: "https://kimi-web-img.moonshot.cn/img/flexmotor.com/41f80fb641b9343f349cb68224310f1f75cafea8.jpeg",
@@ -249,19 +249,19 @@
             {
                 src: "https://kimi-web-img.moonshot.cn/img/flexmotor.com/ef3db970b3689b583ac42617426b8af04e71f4e6.jpeg",
                 alt: "GX60 Custom Build",
-                color: "dark-green",
+                color: "green",
                 title: "GX60 Construcción Personalizada"
             },
             {
                 src: "https://kimi-web-img.moonshot.cn/img/flexmotor.com/55d95cda4672b7599aa1bfb326dba83ecba1481d.jpg",
                 alt: "GX60 Restoration Project",
-                color: "brown",
+                color: "copper",
                 title: "Proyecto de Restauración GX60"
             },
             {
                 src: "https://kimi-web-img.moonshot.cn/img/images.squarespace-cdn.com/3d3135adf08ebb5070ed3124e70ead7e4789f23e.jpg",
                 alt: "GX60 Fully Restored",
-                color: "gray",
+                color: "white",
                 title: "GX60 Completamente Restaurado"
             },
             {
@@ -285,13 +285,13 @@
             {
                 src: "https://kimi-web-img.moonshot.cn/img/manafrelv.com/f171c0d05783564d843f1da528427a21c85b4675.webp",
                 alt: "GX60 Desert Tan",
-                color: "brown",
+                color: "beige",
                 title: "GX60 Tan Desierto"
             },
             {
                 src: "https://kimi-web-img.moonshot.cn/img/carsguide-res.cloudinary.com/6be0091380468ade24beb9486721c8c075df01b0.jpg",
                 alt: "GX60 Forest Green",
-                color: "dark-green",
+                color: "green",
                 title: "GX60 Verde Bosque"
             }
         ];
@@ -408,18 +408,7 @@
             // Check for a color from the home page
             const selectedColor = localStorage.getItem('selectedVehicleColor');
             if (selectedColor) {
-                const colorMap = {
-                    '#4a5d45': 'green',
-                    '#8b4513': 'brown',
-                    '#696969': 'gray',
-                    '#2f4f2f': 'dark-green',
-                    '#8b0000': 'red',
-                    '#4682b4': 'blue'
-                };
-                const colorNameToFilter = colorMap[selectedColor];
-                if (colorNameToFilter) {
-                    filterByColor(colorNameToFilter);
-                }
+                filterByColor(selectedColor);
             }
             
             // Animate sections on load
