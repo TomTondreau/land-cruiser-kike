@@ -102,6 +102,14 @@
                 <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Gira el Land Cruiser</h2>
                 <div id="viewer-360" style="width: 500px; height: 300px; margin: auto; cursor: grab; background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
                 <p class="text-center text-gray-500 mt-4">Arrastra la imagen para girar el vehículo</p>
+                <div class="flex justify-center mt-4 space-x-4">
+                    <button id="rotate-left-btn" class="p-2 bg-gray-300 rounded-full hover:bg-gray-400 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button id="rotate-right-btn" class="p-2 bg-gray-300 rounded-full hover:bg-gray-400 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
             </div>
 
             <!-- Quick Stats -->
@@ -161,6 +169,16 @@
 
             viewer.style.backgroundImage = `url(${images[0]})`;
 
+            function rotate(direction) {
+                if (direction === 'left') {
+                    currentFrame = (currentFrame - 1 + images.length) % images.length;
+                } else {
+                    currentFrame = (currentFrame + 1) % images.length;
+                }
+                viewer.style.backgroundImage = `url(${images[currentFrame]})`;
+            }
+
+            // Mouse drag controls
             viewer.addEventListener('mousedown', function(e) {
                 isDragging = true;
                 startX = e.clientX;
@@ -179,14 +197,23 @@
                 const deltaX = e.clientX - lastX;
                 lastX = e.clientX;
 
-                // Adjust frame based on drag direction
-                if (deltaX > 10) { // Drag right - increased threshold for smoother rotation
-                    currentFrame = (currentFrame + 1) % images.length;
-                    viewer.style.backgroundImage = `url(${images[currentFrame]})`;
-                } else if (deltaX < -10) { // Drag left - increased threshold
-                    currentFrame = (currentFrame - 1 + images.length) % images.length;
-                    viewer.style.backgroundImage = `url(${images[currentFrame]})`;
+                if (deltaX > 10) { // Drag right
+                    rotate('right');
+                } else if (deltaX < -10) { // Drag left
+                    rotate('left');
                 }
+            });
+
+            // Button controls
+            const rotateLeftBtn = document.getElementById('rotate-left-btn');
+            const rotateRightBtn = document.getElementById('rotate-right-btn');
+
+            rotateLeftBtn.addEventListener('click', function() {
+                rotate('left');
+            });
+
+            rotateRightBtn.addEventListener('click', function() {
+                rotate('right');
             });
 
             // Initialize maintenance chart
