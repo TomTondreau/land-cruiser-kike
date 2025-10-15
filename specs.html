@@ -92,7 +92,7 @@
     </nav>
 
     <!-- Header -->
-    <section class="pt-20 sm:pt-24 pb-8 px-6">
+    <section class="py-8 px-6">
         <div class="max-w-7xl mx-auto text-center">
             <h1 class="hero-title text-5xl md:text-6xl mb-4 text-gray-800">Especificaciones Técnicas</h1>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">Datos detallados del Toyota Land Cruiser GX Serie 60 de 1984 - La evolución del off-road</p>
@@ -104,19 +104,19 @@
         <div class="max-w-7xl mx-auto">
             <div class="bg-white rounded-2xl p-4 card-shadow">
                 <div class="flex flex-wrap justify-center space-x-4">
-                    <button class="tab-button active px-6 py-3 rounded-xl font-medium" onclick="showTab('engine')">
+                    <button class="tab-button active px-6 py-3 rounded-xl font-medium" onclick="showTab(event, 'engine')">
                         Motor & Performance
                     </button>
-                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab('dimensions')">
+                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab(event, 'dimensions')">
                         Dimensiones & Peso
                     </button>
-                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab('transmission')">
+                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab(event, 'transmission')">
                         Transmisión & Tracción
                     </button>
-                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab('suspension')">
+                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab(event, 'suspension')">
                         Suspensión & Frenos
                     </button>
-                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab('electrical')">
+                    <button class="tab-button px-6 py-3 rounded-xl font-medium" onclick="showTab(event, 'electrical')">
                         Sistema Eléctrico
                     </button>
                 </div>
@@ -437,15 +437,15 @@
                         <h3 class="text-2xl font-bold mb-6 text-gray-800">Llantas Serie 60</h3>
                         <div class="grid md:grid-cols-3 gap-6">
                             <div class="text-center">
-                                <div class="text-3xl font-bold text-green-600 mb-2">7.50</div>
+                                <div class="text-3xl font-bold text-red-600 mb-2">7.50</div>
                                 <div class="text-gray-600">Ancho (pulgadas)</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-3xl font-bold text-green-600 mb-2">16</div>
+                                <div class="text-3xl font-bold text-red-600 mb-2">16</div>
                                 <div class="text-gray-600">Diámetro (pulgadas)</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-3xl font-bold text-green-600 mb-2">LT</div>
+                                <div class="text-3xl font-bold text-red-600 mb-2">LT</div>
                                 <div class="text-gray-600">Tipo</div>
                             </div>
                         </div>
@@ -570,177 +570,6 @@
                 menu.classList.toggle('hidden');
             });
 
-            function showTab(tabName) {
-                // Hide all tab contents
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                
-                // Remove active class from all buttons
-                document.querySelectorAll('.tab-button').forEach(button => {
-                    button.classList.remove('active');
-                });
-                
-                // Show selected tab content
-                document.getElementById(tabName).classList.add('active');
-                
-                // Add active class to clicked button
-                event.target.classList.add('active');
-                
-                // Initialize charts for the active tab
-                setTimeout(() => {
-                    initializeCharts(tabName);
-                }, 100);
-            }
-
-            function initializeCharts(tabName) {
-                if (tabName === 'engine') {
-                    initPerformanceChart();
-                } else if (tabName === 'dimensions') {
-                    initAnglesChart();
-                } else if (tabName === 'transmission') {
-                    initTransmissionChart();
-                }
-            }
-
-            function initPerformanceChart() {
-                const chartDom = document.getElementById('performance-chart');
-                if (!chartDom || chartDom.hasAttribute('data-initialized')) return;
-                
-                const myChart = echarts.init(chartDom);
-                chartDom.setAttribute('data-initialized', 'true');
-                
-                const option = {
-                    title: {
-                        text: 'Curvas de Performance Motor 2H',
-                        left: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    legend: {
-                        data: ['Potencia (HP)', 'Torque (lb-ft)'],
-                        top: '10%'
-                    },
-                    xAxis: {
-                        type: 'category',
-                        data: ['1000', '1500', '2000', '2500', '3000', '3500', '4000'],
-                        name: 'RPM'
-                    },
-                    yAxis: [
-                        {
-                            type: 'value',
-                            name: 'Potencia (HP)',
-                            position: 'left'
-                        },
-                        {
-                            type: 'value',
-                            name: 'Torque (lb-ft)',
-                            position: 'right'
-                        }
-                    ],
-                    series: [
-                        {
-                            name: 'Potencia (HP)',
-                            type: 'line',
-                            data: [35, 50, 70, 85, 95, 105, 100],
-                            itemStyle: { color: '#4a5d45' },
-                            smooth: true
-                        },
-                        {
-                            name: 'Torque (lb-ft)',
-                            type: 'line',
-                            yAxisIndex: 1,
-                            data: [120, 140, 177, 175, 170, 165, 160],
-                            itemStyle: { color: '#8b4513' },
-                            smooth: true
-                        }
-                    ]
-                };
-                
-                myChart.setOption(option);
-            }
-
-            function initAnglesChart() {
-                const chartDom = document.getElementById('angles-chart');
-                if (!chartDom || chartDom.hasAttribute('data-initialized')) return;
-                
-                const myChart = echarts.init(chartDom);
-                chartDom.setAttribute('data-initialized', 'true');
-                
-                const option = {
-                    title: {
-                        text: 'Ángulos de Aproximación Serie 60',
-                        left: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'item'
-                    },
-                    series: [
-                        {
-                            name: 'Ángulos',
-                            type: 'pie',
-                            radius: '70%',
-                            data: [
-                                { value: 37, name: 'Ángulo de Ataque', itemStyle: { color: '#4a5d45' } },
-                                { value: 25, name: 'Ángulo de Salida', itemStyle: { color: '#8b4513' } },
-                                { value: 22, name: 'Ángulo de Rampa', itemStyle: { color: '#696969' } }
-                            ],
-                            emphasis: {
-                                itemStyle: {
-                                    shadowBlur: 10,
-                                    shadowOffsetX: 0,
-                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                }
-                            }
-                        }
-                    ]
-                };
-                
-                myChart.setOption(option);
-            }
-
-            function initTransmissionChart() {
-                const chartDom = document.getElementById('transmission-chart');
-                if (!chartDom || chartDom.hasAttribute('data-initialized')) return;
-                
-                const myChart = echarts.init(chartDom);
-                chartDom.setAttribute('data-initialized', 'true');
-                
-                const option = {
-                    title: {
-                        text: 'Relaciones de Transmisión H41',
-                        left: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    },
-                    xAxis: {
-                        type: 'category',
-                        data: ['1era', '2da', '3ra', '4ta', 'Reversa', 'Reductora']
-                    },
-                    yAxis: {
-                        type: 'value',
-                        name: 'Relación'
-                    },
-                    series: [
-                        {
-                            name: 'Relación',
-                            type: 'bar',
-                            data: [4.374, 2.381, 1.429, 1.000, 4.472, 2.313],
-                            itemStyle: {
-                                color: '#4a5d45'
-                            }
-                        }
-                    ]
-                };
-                
-                myChart.setOption(option);
-            }
-
             // Initialize first tab charts
             setTimeout(() => {
                 initPerformanceChart();
@@ -756,6 +585,177 @@
                 easing: 'easeOutQuad'
             });
         });
+
+        function showTab(event, tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.currentTarget.classList.add('active');
+            
+            // Initialize charts for the active tab
+            setTimeout(() => {
+                initializeCharts(tabName);
+            }, 100);
+        }
+
+        function initializeCharts(tabName) {
+            if (tabName === 'engine') {
+                initPerformanceChart();
+            } else if (tabName === 'dimensions') {
+                initAnglesChart();
+            } else if (tabName === 'transmission') {
+                initTransmissionChart();
+            }
+        }
+
+        function initPerformanceChart() {
+            const chartDom = document.getElementById('performance-chart');
+            if (!chartDom || chartDom.hasAttribute('data-initialized')) return;
+            
+            const myChart = echarts.init(chartDom);
+            chartDom.setAttribute('data-initialized', 'true');
+            
+            const option = {
+                title: {
+                    text: 'Curvas de Performance Motor 2H',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['Potencia (HP)', 'Torque (lb-ft)'],
+                    top: '10%'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['1000', '1500', '2000', '2500', '3000', '3500', '4000'],
+                    name: 'RPM'
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: 'Potencia (HP)',
+                        position: 'left'
+                    },
+                    {
+                        type: 'value',
+                        name: 'Torque (lb-ft)',
+                        position: 'right'
+                    }
+                ],
+                series: [
+                    {
+                        name: 'Potencia (HP)',
+                        type: 'line',
+                        data: [35, 50, 70, 85, 95, 105, 100],
+                        itemStyle: { color: '#4a5d45' },
+                        smooth: true
+                    },
+                    {
+                        name: 'Torque (lb-ft)',
+                        type: 'line',
+                        yAxisIndex: 1,
+                        data: [120, 140, 177, 175, 170, 165, 160],
+                        itemStyle: { color: '#D2C6A8' },
+                        smooth: true
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+        }
+
+        function initAnglesChart() {
+            const chartDom = document.getElementById('angles-chart');
+            if (!chartDom || chartDom.hasAttribute('data-initialized')) return;
+            
+            const myChart = echarts.init(chartDom);
+            chartDom.setAttribute('data-initialized', 'true');
+            
+            const option = {
+                title: {
+                    text: 'Ángulos de Aproximación Serie 60',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                series: [
+                    {
+                        name: 'Ángulos',
+                        type: 'pie',
+                        radius: '70%',
+                        data: [
+                            { value: 37, name: 'Ángulo de Ataque', itemStyle: { color: '#4a5d45' } },
+                            { value: 25, name: 'Ángulo de Salida', itemStyle: { color: '#D2C6A8' } },
+                            { value: 22, name: 'Ángulo de Rampa', itemStyle: { color: '#696969' } }
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+        }
+
+        function initTransmissionChart() {
+            const chartDom = document.getElementById('transmission-chart');
+            if (!chartDom || chartDom.hasAttribute('data-initialized')) return;
+            
+            const myChart = echarts.init(chartDom);
+            chartDom.setAttribute('data-initialized', 'true');
+            
+            const option = {
+                title: {
+                    text: 'Relaciones de Transmisión H41',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['1era', '2da', '3ra', '4ta', 'Reversa', 'Reductora']
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Relación'
+                },
+                series: [
+                    {
+                        name: 'Relación',
+                        type: 'bar',
+                        data: [4.374, 2.381, 1.429, 1.000, 4.472, 2.313],
+                        itemStyle: {
+                            color: '#4a5d45'
+                        }
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+        }
     </script>
 </body>
 </html>
