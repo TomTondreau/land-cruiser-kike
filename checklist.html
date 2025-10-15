@@ -457,6 +457,7 @@
                     checkbox.checked = false;
                 });
                 updateProgress();
+                localStorage.removeItem('landcruiser-maintenance-progress'); // Clear saved progress
                 
                 // Animate reset
                 anime({
